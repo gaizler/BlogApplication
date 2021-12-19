@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BlogBLL.Interfaces;
+using BlogBLL.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlogApplication.Controllers
 {
     public class PostController : Controller
     {
-        public IActionResult Index()
+        private readonly IPostService _postService;
+        public PostController(IPostService postService)
         {
-            return View();
+            _postService= postService;
+        }
+
+        public IActionResult Index(int id)
+        {
+            var post = _postService.GetById(id);
+            return View(post);
         }
     }
 }

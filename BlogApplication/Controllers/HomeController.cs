@@ -1,4 +1,5 @@
 ﻿using BlogApplication.Models;
+using BlogBLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +13,33 @@ namespace BlogApplication.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IPostService _postService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IPostService postService)
         {
             _logger = logger;
+            _postService = postService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var allPosts = _postService.GetAll().ToList();
+            if(ViewBag.PostsCount==null)
+                ViewBag.PostsCount = 5;  
+            
+            return View(allPosts);
+        }
+
+        public IActionResult OlderPosts(int currentCount)
+        {
+            var allPosts = _postService.GetAll().ToList();
+            if ((allPosts.Count - currentCount) >= 5)
+                currentCount += 5;
+            else
+                currentCount += (allPosts.Count - currentCount);
+
+            ViewBag.PostsCount = currentCount;
+            return View("Index",allPosts);
         }
 
         public IActionResult About()

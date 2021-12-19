@@ -1,3 +1,7 @@
+using AutoMapper;
+using BlogDAL;
+using BlogDAL.Interfaces;
+using BlogBLL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogBLL.Interfaces;
+using BlogBLL.Services;
 
 namespace BlogApplication
 {
@@ -24,6 +30,18 @@ namespace BlogApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IUnitOfWork>(x=>new UnitOfWork(new BlogDbContext()));
+
+            //mapper config
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutomapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
