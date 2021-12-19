@@ -25,13 +25,13 @@ namespace BlogBLL.Services
         public void Add(PostModel model)
         {
             _unitOfWork.PostRepository.Add(_mapper.Map<Post>(model));
-            _unitOfWork.Save();
+            //_unitOfWork.Save();
         }
 
         public bool DeleteById(int modelId)
         {
             var result=_unitOfWork.PostRepository.DeleteById(modelId);
-            _unitOfWork.Save();
+            //_unitOfWork.Save();
             return result;
 
         }
@@ -59,7 +59,7 @@ namespace BlogBLL.Services
             post.ImgPath = model.ImgPath;
 
             _unitOfWork.PostRepository.Update(post);
-            _unitOfWork.Save();
+            //_unitOfWork.Save();
         }
     }
 }

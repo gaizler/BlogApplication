@@ -1,0 +1,83 @@
+﻿@model BlogBLL.Models.PostModel
+
+
+<header class="masthead">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Updating a post</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="row">
+    <div class="d-flex justify-content-center">
+        <div class="col-md-4">
+            <form asp-action="Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                 <div class="form-group">
+                    <label for="id" v class="control-label">Select id:</label>
+                    <select name="id" class="form-control" id="select" required>
+                        <option selected disabled>None</option>
+                        @foreach(var post in ViewBag.Posts)
+                        {
+                            <option>@post</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author" class="control-label"></label>
+                    <input asp-for="Author" class="form-control" id="author" required/>
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" id="title" required/>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Subtitle" class="control-label"></label>
+                    <input asp-for="Subtitle" class="form-control" id="subtitle" required/>
+                    <span asp-validation-for="Subtitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea rows="20" asp-for="Content" class="form-control" id="content" required></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DatePosted" class="control-label"></label>
+                    <input asp-for="DatePosted" class="form-control" id="date" required/>
+                    <span asp-validation-for="DatePosted" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImgPath" class="control-label"></label>
+                    <input asp-for="ImgPath" class="form-control" id="img-url" value="https://picsum.photos/1000/800" required/>
+                    <span asp-validation-for="ImgPath" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImgDescription" class="control-label"></label>
+                    <input asp-for="ImgDescription" class="form-control" id="img-desc" required/>
+                    <span asp-validation-for="ImgDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="margin-top:20px">
+                    <input type="submit" value="Save" class="btn btn-primary" id="submit"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

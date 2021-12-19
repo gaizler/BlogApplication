@@ -131,7 +131,14 @@ namespace BlogDAL.Repositories
 
         public void Update(Post entity)
         {
-            _dbContext.Update(entity);
+            var post = _dbContext.Posts.First(x => x.Id==entity.Id);
+
+            post.Title = entity.Title;
+            post.DatePosted = entity.DatePosted;
+            post.ImgDescription= entity.ImgDescription;
+            post.Subtitle= entity.Subtitle;
+            post.Content = entity.Content;
+            post.ImgPath=entity.ImgPath;
         }
     }
 }

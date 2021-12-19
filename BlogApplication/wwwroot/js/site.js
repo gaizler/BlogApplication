@@ -28,3 +28,12 @@ window.addEventListener('DOMContentLoaded', () => {
         scrollPos = currentTop;
     })
 })
+
+//window.onload = function () {
+//    $("#select").change(function () {
+//        let a = $("#select").val()
+
+
+//        let B=1200034
+//    })
+//}

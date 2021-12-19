@@ -32,7 +32,7 @@ namespace BlogApplication
             services.AddControllersWithViews();
 
             services.AddScoped<IPostService, PostService>();
-            services.AddScoped<IUnitOfWork>(x=>new UnitOfWork(new BlogDbContext()));
+            services.AddSingleton<IUnitOfWork>(x=>new UnitOfWork(new BlogDbContext()));
 
             //mapper config
             var mapperConfig = new MapperConfiguration(mc =>
