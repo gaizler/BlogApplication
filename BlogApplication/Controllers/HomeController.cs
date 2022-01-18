@@ -25,8 +25,9 @@ namespace BlogApplication.Controllers
         {
             var allPosts = _postService.GetAll().ToList();
             if(ViewBag.PostsCount==null)
-                ViewBag.PostsCount = 5;  
-            
+                ViewBag.PostsCount = 5;
+
+            allPosts = allPosts.OrderByDescending(x => x.DatePosted).ToList();
             return View(allPosts);
         }
 
