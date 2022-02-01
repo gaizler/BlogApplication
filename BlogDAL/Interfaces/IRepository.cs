@@ -13,7 +13,7 @@ namespace BlogDAL.Interfaces
         TEntity GetById(int id);
         void Add(TEntity entity);
         void Update(TEntity entity);
-        bool Delete(TEntity entity);
+        void Delete(TEntity entity);
         bool DeleteById(int id);
     }
 }
