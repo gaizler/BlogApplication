@@ -36,7 +36,6 @@ namespace BlogApplication.Controllers
             if (!ModelState.IsValid)
                 return View(post);
 
-            post.Id = _postService.GetAll().Last().Id + 1;
             _postService.Add(post);
 
             return RedirectToRoute(new {controller="Home", action="Index"});

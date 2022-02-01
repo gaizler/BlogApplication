@@ -11,11 +11,6 @@ namespace BlogDAL
 {
     public class BlogDbContext:DbContext
     {
-        public BlogDbContext()
-        {
-          
-        }
-
         public BlogDbContext(DbContextOptions<BlogDbContext> options):base(options)
         {
             Database.EnsureCreated();
