@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using BlogBLL.Interfaces;
 using BlogBLL.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlogApplication.Controllers
 {
@@ -28,7 +30,7 @@ namespace BlogApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm] PostModel post)
+        public async Task<IActionResult> Create([FromForm] PostModel post)
         {
             if (post.DatePosted.Year < 2021)
                 ModelState.AddModelError(nameof(post.DatePosted),"Cannot add post older than 2 years. Minimal year is 2021");
@@ -36,7 +38,7 @@ namespace BlogApplication.Controllers
             if (!ModelState.IsValid)
                 return View(post);
 
-            _postService.Add(post);
+            await _postService.Add(post);
 
             return RedirectToRoute(new {controller="Home", action="Index"});
         }

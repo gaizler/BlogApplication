@@ -15,16 +15,23 @@ namespace BlogBLL.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IImageService _imageService;
 
-        public PostService(IUnitOfWork unitOfWork, IMapper mapper)
+        public PostService(IUnitOfWork unitOfWork, IMapper mapper, IImageService imageService)
         {
             _unitOfWork=unitOfWork;
             _mapper=mapper;
+            _imageService=imageService;
+
         }
 
-        public void Add(PostModel model)
+        public async Task Add(PostModel model)
         {
-            _unitOfWork.PostRepository.Add(_mapper.Map<Post>(model));
+            var fileName=await _imageService.Upload(model.Image.FileName,model.Image.OpenReadStream());
+            var post=_mapper.Map<Post>(model);
+            post.ImgPath = "https://spu911haizlerstorage.blob.core.windows.net/images/" + fileName;
+
+            _unitOfWork.PostRepository.Add(post);
             _unitOfWork.Save();
         }
 
@@ -56,7 +63,7 @@ namespace BlogBLL.Services
             post.Author=model.Author;
             post.Content = model.Content;
             post.ImgDescription=model.ImgDescription;
-            post.ImgPath = model.ImgPath;
+            //post.ImgPath = model.ImgPath;
 
             _unitOfWork.PostRepository.Update(post);
             _unitOfWork.Save();

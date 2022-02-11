@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using BlogBLL.Interfaces;
 using BlogBLL.Services;
 using Microsoft.EntityFrameworkCore;
+using Azure.Storage.Blobs;
 
 namespace BlogApplication
 {
@@ -36,7 +37,11 @@ namespace BlogApplication
             services.AddControllersWithViews();
 
             services.AddScoped<IPostService, PostService>();
-            services.AddSingleton<IUnitOfWork,UnitOfWork>();
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
+            services.AddScoped<IImageService, ImageService>();
+
+            var blobConnectionString = Configuration.GetConnectionString("BlobStorageConnection");
+            services.AddScoped(x => new BlobServiceClient(blobConnectionString));
 
             //mapper config
             var mapperConfig = new MapperConfiguration(mc =>

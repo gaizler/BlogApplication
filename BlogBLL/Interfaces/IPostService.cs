@@ -13,7 +13,7 @@ namespace BlogBLL.Interfaces
 
         PostModel GetById(int id);
 
-        void Add(PostModel model);
+        Task Add(PostModel model);
 
         void Update(PostModel model);
 

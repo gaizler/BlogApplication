@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,7 +33,10 @@ namespace BlogBLL.Models
         [Display(Name = "Date posted:")]
         public DateTime DatePosted { get; set; }
 
-        [Display(Name = "Path to image:")]
+        [Required]
+        [Display(Name = "Image:")]
+        public IFormFile Image { get; set; }
+
         public string ImgPath { get; set; }
 
         [Display(Name = "Image description:")]
